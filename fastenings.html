@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Materials - Decking</title>
+    <link rel="icon" type="image/x-icon" href="images/favicon.png" />
+    <link rel="stylesheet" href="css/deckings.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <!-- Load AngularJS -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script type="text/javascript">
+      var app = angular.module("MaterialDeckingManagement", []);
+
+      //Controller Part
+      app.controller(
+        "MaterialDeckingManagementController",
+        function ($scope, $http) {
+          //Initialize page with default data which is blank in this example
+          $scope.fastening = [];
+
+          $scope.form = {
+            name: "",
+            price: "",
+          };
+
+          //Now load the data from server
+          _refreshPageData();
+
+          //HTTP POST methods for add decking
+          $scope.addFastenings = function () {
+            var dataFastenings = {
+              name: $scope.form.name,
+              price: $scope.form.price,
+            };
+
+            if (dataFastenings.name && dataFastenings.price) {
+              $http({
+                method: "POST",
+                url: "/api/materials/fastenings",
+                data: angular.toJson(dataFastenings),
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              }).then(_success, _error);
+            }
+          };
+
+          $scope.delFastenings = function (index) {
+            // modal are you sure
+            // if no then return
+            // if yes $http...
+
+            $http({
+              method: "DELETE",
+              url: "/api/materials/fastenings",
+              data: angular.toJson($scope.fastening[index]),
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }).then(_success, _error);
+          };
+
+          /* Private Methods */
+          //HTTP GET- get all deckings collection
+          function _refreshPageData() {
+            $http({
+              method: "GET",
+              url: "/api/materials/fastenings",
+            }).then(
+              function successCallback(response) {
+                $scope.fastening = response.data;
+              },
+              function errorCallback(response) {
+                console.log(response.statusText);
+              }
+            );
+          }
+
+          function _success(response) {
+            _refreshPageData();
+            _clearForm();
+          }
+
+          function _error(response) {
+            alert(response.data.message || response.statusText);
+          }
+
+          //Clear the form
+          function _clearForm() {
+            $scope.form.name = "";
+            $scope.form.price = "";
+          }
+        }
+      );
+    </script>
+  </head>
+  <body
+    ng-app="MaterialDeckingManagement"
+    ng-controller="MaterialDeckingManagementController"
+  >
+    <div class="back-btn">
+      <a class="link" href="/index.html">
+        <button type="button" class="btn btn-outline-secondary">< Back</button>
+      </a>
+    </div>
+    <h1>Material Management - Fastenings</h1>
+    <div class="container">
+      <div class="form-container">
+        <form ng-submit="addFastenings()">
+          <h3>Add a fastening</h3>
+          <div class="form-floating mb-3 input-container">
+            <div class="col-6">
+              <label for="name">Name:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="floatingInput"
+                placeholder="Name"
+                ng-model="form.name"
+                size="60"
+              />
+            </div>
+          </div>
+          <div class="form-floating mb-3 input-container">
+            <div class="input-group col-6">
+              <label class="price-label" for="name">Price:</label>
+              <input
+                type="tel"
+                class="form-control"
+                id="floatingInput"
+                placeholder="Price"
+                ng-model="form.price"
+                size="60"
+                aria-label="Dollar amount (with dot and two decimal places)"
+              />
+              <span class="input-group-text">€</span>
+            </div>
+          </div>
+          <div class="save-btn-container">
+            <input
+              type="submit"
+              value="Add"
+              class="btn btn-secondary save-btn"
+            />
+          </div>
+        </form>
+      </div>
+
+      <div class="order">
+        <h3>Decking List</h3>
+        <div class="row">
+          <div class="col-4"><label>Name:</label></div>
+          <div class="col-5"><label>Price:</label></div>
+          <div class="col-3"><label>Action</label></div>
+        </div>
+        <div class="row" ng-repeat="fastening in fastening">
+          <div class="col-4">{{ fastening.name }}</div>
+          <div class="col-5">{{ fastening.price }}€</div>
+          <div class="col-3">
+            <button
+              id="del-btn"
+              class="btn btn-danger"
+              ng-click="delFastenings($index)"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

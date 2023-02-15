@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Design - Decking</title>
+    <script src="https://unpkg.com/konva@8.4.2/konva.min.js"></script>
+    <link rel="icon" type="image/x-icon" href="images/favicon.png" />
+    <link rel="stylesheet" href="./css/design.css" />
+    <link
+      rel="stylesheet"
+      href="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+    />
+    <!-- Load AngularJS -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script type="text/javascript">
+      var app = angular.module("MaterialDeckingManagement", []);
+
+      //Controller Part
+      app.controller(
+        "MaterialDeckingManagementController",
+
+        function ($scope, $http) {
+          //Initialize page with default data which is blank in this example
+          $scope.deckings = [];
+          $scope.rails = [];
+          $scope.fastenings = [];
+
+          //Now load the data from server
+          getDeckings();
+          getRails();
+          getFastenings();
+
+          /* Private Methods */
+          //HTTP GET- get all api collection
+
+          function getDeckings() {
+            $http({
+              method: "GET",
+              url: "/api/materials/decking",
+            }).then(
+              function successCallback(response) {
+                $scope.deckings = response.data;
+              },
+              function errorCallback(response) {
+                console.log(response.statusText);
+              }
+            );
+          }
+
+          function getRails() {
+            $http({
+              method: "GET",
+              url: "/api/materials/rails",
+            }).then(
+              function successCallback(response) {
+                $scope.rails = response.data;
+              },
+              function errorCallback(response) {
+                console.log(response.statusText);
+              }
+            );
+          }
+
+          function getFastenings() {
+            $http({
+              method: "GET",
+              url: "/api/materials/fastenings",
+            }).then(
+              function successCallback(response) {
+                $scope.fastenings = response.data;
+              },
+              function errorCallback(response) {
+                console.log(response.statusText);
+              }
+            );
+          }
+        }
+      );
+    </script>
+  </head>
+  <body
+    ng-app="MaterialDeckingManagement"
+    ng-controller="MaterialDeckingManagementController"
+  >
+    <main class="row">
+      <div class="back-btn">
+        <a class="link" href="/index.html">
+          <button type="button" class="btn btn-outline-secondary">
+            < Back
+          </button>
+        </a>
+      </div>
+      <div class="heading">
+        <h2>DECK PLANNER</h2>
+        <img src="./images/logo.png" alt="" />
+      </div>
+
+      <div class="dropdown-holder col-4">
+        <div class="single-design">
+          <p>
+            <a
+              class="btn btn-primary accordion"
+              data-bs-toggle="collapse"
+              href="#multiCollapseExample1"
+              role="button"
+              aria-expanded="false"
+              aria-controls="multiCollapseExample1"
+            >
+              <img
+                class="cross-img"
+                src="https://cdn-icons-png.flaticon.com/128/8677/8677674.png"
+                alt=""
+              />
+              Deck shape
+            </a>
+          </p>
+          <div class="collapse multi-collapse" id="multiCollapseExample1">
+            <div class="card card-body">
+              <select name="boards" id="boards">
+                <option value="-" disabled selected>
+                  Please select deck shape
+                </option>
+                <option value="square">Square</option>
+                <option value="l-shape">L-shape</option>
+                <option value="free-form">Free form</option>
+              </select>
+            </div>
+
+            <p class="paragraph">Make your dimensions</p>
+
+            <div class="input-holder">
+              <div class="col-6 input-group dimensions-input">
+                <input
+                  type="tel"
+                  class="form-control"
+                  id="floatingInput"
+                  placeholder="Width"
+                  ng-model="form.depth"
+                  size="60"
+                />
+                <span class="input-group-text">cm</span>
+              </div>
+              <div class="col-6 input-group dimensions-input">
+                <input
+                  type="tel"
+                  class="form-control"
+                  id="floatingInput"
+                  placeholder="Length"
+                  ng-model="form.depth"
+                  size="60"
+                />
+                <span class="input-group-text">cm</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="single-design">
+          <p>
+            <a
+              class="btn btn-primary accordion"
+              data-bs-toggle="collapse"
+              href="#multiCollapseExample2"
+              role="button"
+              aria-expanded="false"
+              aria-controls="multiCollapseExample2"
+            >
+              <img
+                class="cross-img"
+                src="https://cdn-icons-png.flaticon.com/128/8677/8677674.png"
+                alt=""
+              />
+              Boards
+            </a>
+          </p>
+          <div class="collapse" id="multiCollapseExample2">
+            <div class="card card-body">
+              <select name="boards" id="boards">
+                <option value="-" disabled selected>Please select board</option>
+                <option value="" ng-repeat="decking in deckings">
+                  {{ decking.name }}
+                </option>
+              </select>
+            </div>
+
+            <p class="paragraph">Select board length</p>
+
+            <div class="col-6 input-group dimensions-input">
+              <input
+                type="tel"
+                class="form-control"
+                id="floatingInput"
+                placeholder="Width"
+                ng-model="form.depth"
+                size="60"
+              />
+              <span class="input-group-text">cm</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="single-design">
+          <p>
+            <a
+              class="btn btn-primary accordion"
+              data-bs-toggle="collapse"
+              href="#multiCollapseExample3"
+              role="button"
+              aria-expanded="false"
+              aria-controls="multiCollapseExample3"
+            >
+              <img
+                class="cross-img"
+                src="https://cdn-icons-png.flaticon.com/128/8677/8677674.png"
+                alt=""
+              />
+              Laying option
+            </a>
+          </p>
+          <div class="collapse" id="multiCollapseExample3">
+            <div class="card card-body">
+              <p class="paragraph">Label method:</p>
+              <select name="boards" id="boards">
+                <option value="-" disabled selected>
+                  Please select laying option
+                </option>
+                <option value="square">Joint cut</option>
+                <option value="">Half joint</option>
+                <option value="">Three joint</option>
+              </select>
+
+              <div class="radio-btn">
+                <p class="paragraph">Label direction:</p>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="flexRadioDefault"
+                    id="flexRadioDefault1"
+                  />
+                  <label class="form-check-label" for="flexRadioDefault1">
+                    Horizontal
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="flexRadioDefault"
+                    id="flexRadioDefault2"
+                    checked
+                  />
+                  <label class="form-check-label" for="flexRadioDefault2">
+                    Vertical
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="single-design">
+          <p>
+            <a
+              class="btn btn-primary accordion"
+              data-bs-toggle="collapse"
+              href="#multiCollapseExample4"
+              role="button"
+              aria-expanded="false"
+              aria-controls="multiCollapseExample4"
+            >
+              <img
+                class="cross-img"
+                src="https://cdn-icons-png.flaticon.com/128/8677/8677674.png"
+                alt=""
+              />
+              Substructure
+            </a>
+          </p>
+          <div class="collapse" id="multiCollapseExample4">
+            <div class="card card-body">
+              <label for="">Rails:</label>
+              <select name="boards" id="boards">
+                <option value="-" disabled selected>Please select rail</option>
+                <option value="" ng-repeat="rail in rails">
+                  {{ rail.name }}
+                </option>
+              </select>
+            </div>
+
+            <div class="card card-body fastenings">
+              <label for="">Fastenings:</label>
+              <select name="borads" id="boards">
+                <option value="-" disabled selected>
+                  Please select fastening
+                </option>
+                <option value="" ng-repeat="fastening in fastenings">
+                  {{ fastening.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="single-design">
+          <p>
+            <a
+              class="btn btn-primary accordion"
+              data-bs-toggle="collapse"
+              href="#multiCollapseExample5"
+              role="button"
+              aria-expanded="false"
+              aria-controls="multiCollapseExample5"
+            >
+              <img
+                class="cross-img"
+                src="https://cdn-icons-png.flaticon.com/128/8677/8677674.png"
+                alt=""
+              />
+              Decking connection
+            </a>
+          </p>
+          <div class="collapse" id="multiCollapseExample5">
+            <div class="card card-body">A-B</div>
+          </div>
+        </div>
+
+        <div class="submit-button">
+          <button class="submit">Submit</button>
+        </div>
+      </div>
+
+      <div class="design-product col-8">
+        <div class="product-img-holder">
+          <div id="container"></div>
+        </div>
+      </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      var width = 1000;
+      var height = 600;
+      let currentShape;
+
+      var inputW = document.querySelector(".width");
+      var inputH = document.querySelector(".height");
+
+      var stage = new Konva.Stage({
+        container: "container",
+        width: width,
+        height: height,
+      });
+
+      var layer = new Konva.Layer();
+
+      var group = new Konva.Group({
+        x: width / 2 - 300 / 2,
+        y: height / 2 - 400 / 2,
+      });
+
+      var rect = new Konva.Rect({
+        x: 60,
+        y: 60,
+        width: 350,
+        height: 350,
+        stroke: "red",
+        draggable: true,
+      });
+
+      var circle = new Konva.Circle({
+        x: 100,
+        y: 100,
+        width: 100,
+        height: 100,
+        // stroke: "red",
+        fill: "white",
+        draggable: true,
+        stroke: "black",
+      });
+
+      // create an image object with the image URL
+      const imageObj = new Image();
+      imageObj.onload = function () {
+        // set the fillPatternImage property of the circle to the image object
+        rect.fillPatternImage(imageObj);
+        rect.fillPatternOffset({ x: -100, y: -100 });
+        // redraw the layer to see the image fill
+        layer.draw();
+      };
+      imageObj.src =
+        "https://images.unsplash.com/photo-1531824475211-72594993ce2a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8d29vZCUyMGRlY2slMjBwcm9qZWN0fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"; // replace with your image URL
+
+      group.add(rect);
+      group.add(circle);
+      layer.add(group);
+      layer.draw();
+      stage.add(layer);
+
+      var trCircle = new Konva.Transformer();
+      layer.add(trCircle);
+      trCircle.nodes([circle]);
+
+      rect.on("transformstart", function () {
+        console.log("transform start");
+      });
+
+      rect.on("dragmove", function () {
+        updateText();
+      });
+      rect.on("transform", function () {
+        updateText();
+        console.log("transform");
+      });
+
+      rect.on("transformend", function () {
+        console.log("transform end");
+      });
+
+      rect.on("mouseover", function () {
+        document.body.style.cursor = "pointer";
+      });
+      rect.on("mouseout", function () {
+        document.body.style.cursor = "default";
+      });
+      circle.on("mouseover", function () {
+        document.body.style.cursor = "pointer";
+      });
+      circle.on("mouseout", function () {
+        document.body.style.cursor = "default";
+      });
+
+      function updateText() {
+        let inputWidth = rect.scaleX() * 100;
+        let inputHeight = rect.scaleY() * 100;
+        inputW.value = parseInt(inputWidth);
+        inputH.value = parseInt(inputHeight);
+      }
+
+      stage.on("wheel", function (e) {
+        e.evt.preventDefault();
+        var oldScale = stage.scaleX();
+        var pointer = stage.getPointerPosition();
+        var mousePointTo = {
+          x: (pointer.x - stage.x()) / oldScale,
+          y: (pointer.y - stage.y()) / oldScale,
+        };
+        var newScale = e.evt.deltaY > 0 ? oldScale * 1.1 : oldScale / 1.1;
+        stage.scale({ x: newScale, y: newScale });
+        var newPos = {
+          x: pointer.x - mousePointTo.x * newScale,
+          y: pointer.y - mousePointTo.y * newScale,
+        };
+        stage.position(newPos);
+        stage.batchDraw();
+      });
+
+      stage.on("click", function (e) {
+        currentShape = e.target;
+        if (currentShape === stage) {
+          tr.nodes([]);
+        } else {
+          tr.nodes([currentShape]);
+        }
+        layer.draw();
+      });
+    </script>
+  </body>
+</html>

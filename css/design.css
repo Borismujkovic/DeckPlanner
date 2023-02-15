@@ -1,0 +1,143 @@
+* {
+  font-family: "Raleway", Helvetica, Arial, Lucida, sans-serif;
+}
+
+main {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+}
+
+.heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.heading > img {
+  width: 300px;
+  height: 52px;
+}
+
+.card{
+  width: 100% !important;
+}
+
+.dropdown-holder {
+  width: 100%;
+  display: flex;
+  flex-direction: column; 
+  justify-content: flex-start;
+  align-items: flex-start; 
+  
+  border-right: 1px solid;
+}
+
+.row{
+  padding: 0 50px !important;
+}
+
+.design-product {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 60%;
+}
+
+.product-img-holder > img {
+  margin: 100px;
+  width: 400px;
+}
+
+.cross-img {
+  height: 20px;
+}
+
+.btn{
+  margin-top: 10px !important;
+}
+
+.accordion {
+  font-size: 1.5rem !important;
+  background-color: transparent !important;
+  color: #fd7500 !important;
+  border: none !important;
+}
+
+.product-img-holder {
+  border: 2px solid #fad271;
+  border-radius: 12px;
+  margin: 20px;
+}
+
+.dropdown-list {
+  display: flex;
+  flex-direction: column;
+}
+
+#boards {
+  padding: 5px;
+  cursor: pointer;
+}
+.radio-btn {
+  margin: 15px 0;
+}
+
+.single-design {
+  margin: 10px 0;
+}
+
+.form-check-input {
+  cursor: pointer;
+}
+
+.row{
+  display: flex !important;
+  flex-wrap: wrap;
+
+}
+
+.input-holder{
+  display: flex;
+  justify-content: space-between;
+}
+
+.dimensions-input{
+  width: 40% !important;
+  font-size: 50% !important;
+}
+
+.paragraph{
+  text-align: center;
+  margin: 10px 0 !important;
+  font-weight: 700 !important;
+}
+
+.submit-button{
+  text-align: center;
+  width: 100%;
+}
+
+.submit{
+  background-color: rgb(245 245 245);
+  border: none;
+  color: black;
+  padding: 7px 12px;
+  border-radius: 12px;
+  box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.75);
+text-align: center;
+}
+
+.submit:hover{
+  background-color: #7aba28;
+  color: white;
+}
+
+.submit:active{
+  box-shadow: none;
+}
+
+.fastenings{
+  margin-top: 10px;
+}

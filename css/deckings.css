@@ -1,0 +1,125 @@
+* {
+  font-family: "Raleway", Helvetica, Arial, Lucida, sans-serif;
+}
+.form-container {
+  width: 50%;
+}
+
+.save-btn {
+  width: 20%;
+}
+
+.order {
+  width: 50%;
+}
+
+.container {
+  display: flex;
+  padding: 0 !important;
+  justify-content: space-around;
+}
+
+.single-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.single-container > div {
+  margin-top: 10px;
+}
+
+.btn {
+  margin-top: 10px !important;
+}
+
+#del-btn {
+  background-color: red;
+  padding: 3px 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.save-btn-container {
+  text-align: center;
+}
+
+.row {
+  border-bottom: 1px solid;
+  padding: 10px;
+  font-size: 1.2rem;
+  margin: 0 !important;
+}
+h1 {
+  text-align: center;
+  padding: 20px 0;
+}
+
+label {
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h3 {
+  text-align: center;
+}
+
+.back-btn {
+  padding: 20px 0 0 20px;
+}
+
+.link {
+  text-decoration: none;
+  color: black;
+}
+
+.price-label {
+  width: 100%;
+}
+
+#index-html {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image: url(../images/background.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#index-html > div {
+  margin: 20px;
+}
+
+.index-btn {
+  width: 200px !important;
+  background-color: #9fbf36 !important;
+  color: white;
+  transition: 0.5s;
+  font-weight: 700 !important;
+  border: none !important;
+}
+
+.index-btn:hover {
+  background-color: white !important;
+  font-weight: 900;
+  color: #9fbf36 !important;
+}
+
+#index-heading {
+  background-color: whitesmoke;
+  padding: 20px;
+  border-radius: 12px;
+  color: #9fbf36;
+  margin-top: 20px;
+}
